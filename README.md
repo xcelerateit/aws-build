@@ -14,16 +14,27 @@ A lightweight Python-based Docker image for AWS development and deployment workf
 
 ```bash
 # Build the image
-docker build -t aws-build .
+docker build -t xcelerateit/aws-build:latest .
+docker build --platform linux/amd64 -t xcelerateit/aws-build:latest .
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  -t xcelerateit/aws-build:latest
+
+# Tag existing local image
+docker tag xcelerateit/aws-build:latest xcelerateit/aws-build:v0.1
+
+# Push the versioned tag (and optionally latest)
+docker push xcelerateit/aws-build:v0.1
+# docker push xcelerateit/aws-build:latest  # if you want to push latest too
 
 # Run interactively
-docker run -it --rm aws-build /bin/bash
+docker run -it --rm xcelerateit/aws-build bash
 
 # Run with AWS credentials
-docker run -it --rm -v ~/.aws:/root/.aws aws-build
+docker run -it --rm -v ~/.aws:/root/.aws xcelerateit/aws-build bash
 
 # Use in CI/CD pipelines
-docker run --rm -v $(pwd):/workspace aws-build python your-script.py
+docker run --rm -v $(pwd):/workspace xcelerateit/aws-build python your-script.py
 ```
 
 ## Requirements
