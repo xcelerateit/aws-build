@@ -7,8 +7,8 @@ A lightweight Python-based Docker image for AWS development and deployment workf
 - Python 3.14.2 slim base
 - AWS CLI for cloud operations
 - kubectl for Kubernetes management
-- Essential build tools (curl, ca-certificates, make)
-- Your custom Python requirements
+- Essential build tools (curl, ca-certificates, taskfile, make, gettext-base)
+- Custom Python requirements
 
 ## Usage
 
@@ -16,16 +16,13 @@ A lightweight Python-based Docker image for AWS development and deployment workf
 # Build the image
 docker build -t xcelerateit/aws-build:latest .
 docker build --platform linux/amd64 -t xcelerateit/aws-build:latest .
-docker buildx build \
-  --platform linux/amd64,linux/arm64 \
-  -t xcelerateit/aws-build:latest
 
 # Tag existing local image
 docker tag xcelerateit/aws-build:latest xcelerateit/aws-build:v0.1
 
-# Push the versioned tag (and optionally latest)
+# Push the versioned tag and latest
 docker push xcelerateit/aws-build:v0.1
-# docker push xcelerateit/aws-build:latest  # if you want to push latest too
+docker push xcelerateit/aws-build:latest
 
 # Run interactively
 docker run -it --rm xcelerateit/aws-build bash
