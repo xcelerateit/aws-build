@@ -34,6 +34,16 @@ docker run -it --rm -v ~/.aws:/root/.aws xcelerateit/aws-build bash
 docker run --rm -v $(pwd):/workspace xcelerateit/aws-build python your-script.py
 ```
 
+## Versioning
+
+The image version is read from the **`VERSION`** file in the repo root (e.g. `0.1.0`). The CI pipeline tags the image with that value (with a `v` prefix, e.g. `v0.1.0`) and always pushes `latest` as well.
+
+**To release a new version:** bump the number in `VERSION`, commit, and push to `main`. The workflow will build and push e.g. `xcelerateit/aws-build:v0.1.1` and `xcelerateit/aws-build:latest`.
+
+## CI/CD (GitHub Actions)
+
+A workflow builds and pushes the image to Docker Hub on push to `main`/`master` or when run manually (**Actions** → **Build and push to Docker Hub** → **Run workflow**).
+
 ## Requirements
 
 Ensure you have a `requirements.txt` file in your project root with your Python dependencies.
